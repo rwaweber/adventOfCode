@@ -6,22 +6,15 @@ import (
 	"time"
 )
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-
 // simplifies text reading operation
 func fromFile() {
 	path := "day3.txt"
-	dat, err := ioutil.ReadFile(path)
-	check(err)
+	dat, _ := ioutil.ReadFile(path)
 	evaluate1(string(dat))
 	evaluate2(string(dat))
 	
 	//	walking before running
-	// test := "^v"
+	// test := "^v<<>>^^vv>><<"
 	// fmt.Println(len(test))
 	// evaluate2(test)
 }
@@ -54,7 +47,8 @@ func motion(a string, entity *coord, locationsVisited *int, coordinateSlice *[]c
 		entity.y--
 	}
 	if visited(entity, coordinateSlice) {
-		fmt.Println(*entity)
+		// fmt.Println(*entity)
+		// adding any unique coordinates to the coordinateSlice
 		*coordinateSlice = append(*coordinateSlice, *entity)
 		*locationsVisited++
 	}
@@ -64,9 +58,7 @@ func evaluate1(inputToEval string) {
 	start := coord{x: 20, y: 20}
 	var listOfCoords []coord
 	listOfCoords = append(listOfCoords, start)
-	fmt.Println(start)
 	numberOfHouses := 1
-	fmt.Println(inputToEval)
 	for i := 0; i < len(inputToEval); i++ {
 		motion(string(inputToEval[i]), &start, &numberOfHouses, &listOfCoords)
 	}
@@ -77,10 +69,8 @@ func evaluate2(inputToEval string) {
 	start := coord{x: 20, y: 20}
 	var listOfCoords []coord
 	listOfCoords = append(listOfCoords, start)
-	fmt.Println(start)
 	// now two houses because s and rs start at the same place
 	numberOfHouses := 1
-	fmt.Println(inputToEval)
 	for i := 0; i < len(inputToEval); i+=2 {
 		motion(string(inputToEval[i]), &start, &numberOfHouses, &listOfCoords)
 	}
